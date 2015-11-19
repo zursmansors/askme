@@ -11,7 +11,7 @@ class QuestionsController < ApplicationController
     @question = Question.new
   end
 
-  def create 
+  def create
     @question = Question.new(question_params)
 
     if @question.save

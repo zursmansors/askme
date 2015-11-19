@@ -4,10 +4,10 @@ RSpec.describe QuestionsController, type: :controller do
 
   let(:question) { create(:question) }
   
-  describe 'GET #index' do  
+  describe 'GET #index' do
     before { get :index }
 
-    it 'populates an array of all questions' do    
+    it 'populates an array of all questions' do
       expect(assigns(:questions)).to match_array(question)
     end
 
@@ -24,7 +24,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     it 'renders show view' do
-      expect(response).to render_template :show      
+      expect(response).to render_template :show
     end
   end
 
