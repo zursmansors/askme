@@ -1,4 +1,4 @@
-class AnswersController < ApplicationController
+ class AnswersController < ApplicationController
   before_action :load_question
 
   def new
@@ -6,13 +6,17 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @answer = @question.answers.new(answer_params)
+    @question = Question.find(params[:question_id])
+    @question.answers.create(answer_params)
+    redirect_to question_path(@question)
 
-    if @answer.save
-      redirect_to @question
-    else
-      render :new
-    end
+  #   @answer = @question.answers.new(answer_params)
+
+  #   if @answer.save
+  #     redirect_to @question
+  #   else
+  #     render :new
+  #   end
   end
 
   private
