@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-
-  let(:question) { create(:question) }
+  let(:user) { create(:user) }
+  let(:question) { create(:question, user: user) }
 
   describe 'GET #index' do
+    let(:questions) { create_list(:question, 2, user: user) }
     before { get :index }
 
     it 'populates an array of all questions' do
@@ -121,14 +122,34 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     sign_in_user
-    before { question }
-    it 'deletes question' do
-      expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+
+    context 'question owner' do
+      let(:question) { create(:question, user: @user) }
+
+      it 'delete the question' do
+        question
+        expect { delete :destroy, id: question }.to change(@user.questions, :count).by(-1)
+      end
+
+      it 'redirects to index' do
+        delete :destroy, id: question
+        expect(response).to redirect_to questions_path
+      end
     end
 
-    it 'redirect to index view' do
-      delete :destroy, id: question
-      expect(response).to redirect_to questions_path
+    context 'not question owner' do
+      let(:question) { create(:question, user: user) }
+
+      it 'should not destroy question' do
+        question
+        expect { delete :destroy, id: question }.to_not change(Question, :count)
+      end
     end
+
+    # context 'not signed in user' do
+    #  it 'should not delete the question' do
+    #    expect { delete :destroy, id: another_question }.to_not change(Question, :count)
+    #  end
+    # end
   end
 end
