@@ -7,27 +7,25 @@ feature 'Create answer', %q{
 } do
 
   given(:user) { create(:user) }
-  # given(:question) { create(:question) }
-  given(:question) { create(:question, user: user) }
+  given!(:question) { create(:question, user: user) }
 
-  scenario 'Authenticated user creates answer' do
+  scenario 'Authenticated user creates an answer' do
     sign_in(user)
 
-    visit question_path(question)
-
+    visit question_path question
     fill_in 'Your answer', with: "My answer"
-    save_and_open_page
+    # save_and_open_page
     click_on 'Add answer'
 
     expect(current_path).to eq question_path(question)
     within '.answers' do
-    expect(page).to have_content 'My answer'
+      expect(page).to have_content 'My answer'
     end
   end
 
-  scenario 'Not authenticated user tries create answer' do
-    visit question_path(question)
+#   scenario 'Not authenticated user tries create answer' do
+#     visit question_path(question)
 
-    expect(page).to_not have_content 'Add answer'
-  end
+#     expect(page).to_not have_content 'Add answer'
+#   end
 end

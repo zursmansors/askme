@@ -13,7 +13,7 @@ feature 'Delete the answer', %q{
 
   scenario 'Authenticated user tries to delete his own answer' do
     sign_in user
-    vvisit question_path question
+    visit question_path question
     save_and_open_page
     click_on 'Delete answer'
 

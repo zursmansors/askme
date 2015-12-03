@@ -3,15 +3,9 @@ p= @question.body
 
 .answers
   - @question.answers.each do |answer|
-    - if user_signed_in? && current_user.author_of?(answer)
-        = link_to answer.body, question_answers_path(answer)
-        = link_to 'Delete answer'
-        / , answer, method: :delete if user_signed_in? && current_user.id == answer.user_id
     p= answer.body
 
 = form_for [@question, @answer] do |f|
-  p= f.label :body, 'Your answer'
-  p= f.text_area :body
-  p= f.submit 'Add answer'
-  - if user_signed_in? && current_user.author_of?(@question)
-    p= link_to 'Delete question', @question, data: {:confirm => 'Are you shure?'}, :method => :delete
+  = f.label :body, 'Your answer'
+  = f.text_area :body
+  = f.submit 'Add answer'

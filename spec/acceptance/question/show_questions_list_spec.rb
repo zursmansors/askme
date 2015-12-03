@@ -6,7 +6,8 @@ feature 'Show questions titles list', %q{
   I want to be able to see the questions list
 } do
 
-  given!(:questions) { create_list(:question,2) }
+  given(:user) { create :user }
+  given!(:questions) { create_list(:question,2, user: user) }
 
   scenario 'Any user looks over the questions titles list' do
     visit questions_path
