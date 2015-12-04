@@ -40,7 +40,7 @@ class QuestionsController < ApplicationController
       @question.destroy
       redirect_to questions_path, notice: 'Question has been deleted.'
     else
-      redirect_to @question, alert: 'Not enough rights'
+      redirect_to questions_path, alert: 'Not enough rights'
     end
   end
 

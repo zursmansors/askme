@@ -3,7 +3,11 @@ p= @question.body
 
 .answers
   - @question.answers.each do |answer|
-    p= answer.body
+      p= answer.body
+      br
+        .center = button_to "Delete answer"
+        / , answer, method: :delete
+      br
 
 = form_for [@question, @answer] do |f|
   = f.label :body, 'Your answer'

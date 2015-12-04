@@ -8,14 +8,19 @@ feature 'Delete question', %q{
 
   given(:user) { create :user }
   given(:question) { create(:question, user: user) }
-  given(:someone_question) { create :question }
 
   scenario 'Authenticated user tries to delete his own question' do
     sign_in user
-    visit question_path question
+    visit question_path
     click_on 'Delete question'
 
     expect(page).to have_content 'Question has been deleted.'
     expect(current_path).to eq questions_path
+  end
+
+  scenario "User can not delete someone else's question" do
+    visit question_path(question)
+
+    expect(page).to_not have_content 'Delete question'
   end
 end

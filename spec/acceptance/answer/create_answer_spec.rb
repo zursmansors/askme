@@ -23,9 +23,9 @@ feature 'Create answer', %q{
     end
   end
 
-#   scenario 'Not authenticated user tries create answer' do
-#     visit question_path(question)
+  scenario 'Not authenticated user tries create answer' do
+    visit question_path(question)
 
-#     expect(page).to_not have_content 'Add answer'
-#   end
+    expect(page).to_not have_content 'Add answer'
+  end
 end

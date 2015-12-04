@@ -7,14 +7,12 @@ feature 'Delete the answer', %q{
 } do
 
   given(:user) { create :user }
-  given(:owner) { create :user }
-  given(:question) { create(:question, user: owner) }
-  given(:answer) { create(:answer, question: question, user: owner) }
+  given(:question) { create(:question, user: user) }
 
   scenario 'Authenticated user tries to delete his own answer' do
     sign_in user
     visit question_path question
-    save_and_open_page
+    # save_and_open_page
     click_on 'Delete answer'
 
     expect(page).to have_content 'Your answer has been deleted'
@@ -30,7 +28,7 @@ feature 'Delete the answer', %q{
   end
 
   scenario 'Not authenticated user tries to delete an answer' do
-    visit question_path(question)
+    visit question_path question
 
     expect(page).to_not have_content 'Delete answer'
   end

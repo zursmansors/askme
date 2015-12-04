@@ -10,6 +10,9 @@ h3
   - @questions.each do |question|
     div
       p= link_to question.title, question_path(question)
+      br
+        .center = button_to "Delete question", question, method: :delete
+      br
 - else
   div
     | Questions is empty
