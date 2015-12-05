@@ -11,7 +11,7 @@ feature 'Delete question', %q{
 
   scenario 'Authenticated user tries to delete his own question' do
     sign_in user
-    visit question_path
+    visit question_path(question)
     click_on 'Delete question'
 
     expect(page).to have_content 'Question has been deleted.'

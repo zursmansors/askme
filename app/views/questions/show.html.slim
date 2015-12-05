@@ -1,15 +1,27 @@
 h3= @question.title
 p= @question.body
-
+=link_to 'To the questions list', questions_path, class:['btn','btn-default']
+br
+-if current_user == @question.user
+  / br
+  /   =link_to 'Edit question', edit_question_path(@question)
+  br
+    =link_to 'Delete question', @question, method: :delete, data: {confirm: "Are you sure?"}
+  br
+h4
+  | Answers:
 .answers
   - @question.answers.each do |answer|
       p= answer.body
-      br
-        .center = button_to "Delete answer"
-        / , answer, method: :delete
-      br
+      -if answer.user == current_user
+        br
+          .center = button_to "Delete answer", [@question, answer], method: :delete, data: {confirm: "Are you sure?"}
+        br
 
 = form_for [@question, @answer] do |f|
   = f.label :body, 'Your answer'
   = f.text_area :body
-  = f.submit 'Add answer'
+  =link_to "Add answer", question_answers_path(question_id:@question)
+      / =answer.user.email
+      / -if answer.user == current_user
+      /   =link_to 'Delete answer', [@question, answer], method: :delete, data: {confirm: "Are you sure?"}

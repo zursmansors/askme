@@ -12,7 +12,7 @@ feature 'Create answer', %q{
   scenario 'Authenticated user creates an answer' do
     sign_in(user)
 
-    visit question_path question
+    visit question_answer_path
     fill_in 'Your answer', with: "My answer"
     # save_and_open_page
     click_on 'Add answer'

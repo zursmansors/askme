@@ -129,29 +129,31 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'DELETE #destroy' do
     sign_in_user
 
-    context 'question owner' do
+    before { question }
+
+    context 'Authenticated user deletes his own question' do
+      let(:question) {create(:question, user: @user)}
+
       it 'delete the question' do
-        question
-        expect { delete :destroy, id: question }.to change(user.questions, :count).by(-1)
+        expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
       end
 
-      it 'redirect to index view' do
+      it 'redirect to :index view' do
         delete :destroy, id: question
         expect(response).to redirect_to questions_path
       end
     end
 
-    context 'not question owner' do
+    context 'Authenticated user delete not his own question' do
+      let(:question) {create(:question, user: user)}
+
       it 'should not delete the question' do
-        question
         expect { delete :destroy, id: question }.to_not change(Question, :count)
       end
-    end
 
-    context 'not signed in user' do
-      it 'should not delete the question' do
-        question
-        expect { delete :destroy, id: question }.to_not change(Question, :count)
+      it 'redirects to index' do
+        delete :destroy, id: question
+        expect(response).to redirect_to questions_path
       end
     end
   end
