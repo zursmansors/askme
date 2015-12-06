@@ -138,20 +138,19 @@ RSpec.describe QuestionsController, type: :controller do
         expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
       end
 
-      it 'redirect to :index view' do
+      it 'redirect to index view' do
         delete :destroy, id: question
         expect(response).to redirect_to questions_path
       end
     end
 
     context 'Authenticated user delete not his own question' do
-      let(:question) {create(:question, user: user)}
 
       it 'should not delete the question' do
         expect { delete :destroy, id: question }.to_not change(Question, :count)
       end
 
-      it 'redirects to index' do
+      it 'redirects to index view' do
         delete :destroy, id: question
         expect(response).to redirect_to questions_path
       end

@@ -3,13 +3,21 @@ class AnswersController < ApplicationController
   before_action :load_answer, only: [:update, :destroy]
   before_action :load_question, only: [:new, :create,:destroy]
 
+  def new
+    @answer = @question.answers.new
+  end
+
   def create
+   # @question = Question.find(params[:question_id])
+   # @question.answers.create(answer_params)
+   # redirect_to question_path(@question)
+
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
 
     if @answer.save
       flash[:notice] = "Answer has been created"
-      redirect_to @question
+      redirect_to question_path(@question)
     else
       flash[:notice] = 'Body is empty'
       render :new
@@ -19,8 +27,8 @@ class AnswersController < ApplicationController
   def destroy
     if current_user.author_of?(@answer)
       @answer.destroy
+      flash.now[:notice] = 'Answer has been deleted.'
       redirect_to question_path(@question)
-      flash.now[:notice] = 'Answer has been deleted'
     else
       flash.now[:alert] = 'Not enough rights'
     end
