@@ -12,15 +12,17 @@ RSpec.describe AnswersController, type: :controller do
         expect do
           post :create,
                 question_id: question,
-                answer: attributes_for(:answer)
+                answer: attributes_for(:answer),
+                format: :js
         end.to change(question.answers, :count).by(1)
       end
 
-      it 'redirects to question show view' do
+      it 'render create template' do
         post :create,
               question_id: question,
-              answer: attributes_for(:answer)
-        expect(response).to redirect_to question_path(question)
+              answer: attributes_for(:answer),
+              format: :js
+        expect(response).to render_template :create
       end
     end
 
@@ -29,12 +31,13 @@ RSpec.describe AnswersController, type: :controller do
         expect do
           post :create,
                answer: attributes_for(:invalid_answer),
-               question_id: question
+               question_id: question,
+               format: :js
         end.to_not change(Answer, :count)
       end
 
       it 'render new template invalid_answer' do
-        post :create, question_id: question.id, answer: attributes_for(:invalid_answer)
+        post :create, question_id: question.id, answer: attributes_for(:invalid_answer), format: :js
         expect(response).to render_template :new
       end
     end
@@ -51,6 +54,6 @@ RSpec.describe AnswersController, type: :controller do
     it 'redirects to question view' do
       expect delete :destroy, id: answer, question_id: question
       expect(response).to redirect_to question_path(assigns(:question))
-    end
+    end    
   end
 end

@@ -57,5 +57,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'capybara'
   gem 'launchy'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 

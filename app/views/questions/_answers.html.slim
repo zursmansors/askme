@@ -1,0 +1,6 @@
+- @question.answers.each do |answer|
+    p= answer.body
+    -if answer.user == current_user
+      br
+        .center = button_to "Delete answer", [@question, answer], method: :delete
+      br

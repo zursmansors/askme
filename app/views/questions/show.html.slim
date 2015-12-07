@@ -9,14 +9,10 @@ br
 h4
   | Answers:
 .answers
-  - @question.answers.each do |answer|
-      p= answer.body
-      -if answer.user == current_user
-        br
-          .center = button_to "Delete answer", [@question, answer], method: :delete, data: {confirm: "Are you sure?"}
-        br
+  = render 'answers'
 
-= form_for [@question, @answer] do |f|
+
+= form_for [@question, @answer], remote: true do |f|
   = f.label :body, 'Your answer'
   = f.text_area :body
   = f.submit 'Add answer'

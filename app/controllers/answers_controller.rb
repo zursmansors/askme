@@ -13,8 +13,8 @@ class AnswersController < ApplicationController
     @answer.user = current_user
 
     if @answer.save
-      flash[:notice] = "Answer has been created"
-      redirect_to question_path(@question)
+      # flash[:notice] = "Answer has been created"
+      # redirect_to question_path(@question)
     else
       flash[:notice] = 'Body is empty'
       render :new
