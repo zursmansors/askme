@@ -8,7 +8,7 @@ class AnswersController < ApplicationController
   end
 
   def create
-  
+
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
 
@@ -24,10 +24,10 @@ class AnswersController < ApplicationController
   def destroy
     if current_user.author_of?(@answer)
       @answer.destroy
-      flash.now[:notice] = 'Answer has been deleted.'
+      flash[:notice] = 'Answer has been deleted.'
       redirect_to question_path(@question)
     else
-      flash.now[:alert] = 'Not enough rights'
+      flash[:alert] = 'Not enough rights'
     end
   end
 
