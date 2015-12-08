@@ -8,17 +8,9 @@ class AnswersController < ApplicationController
   end
 
   def create
-
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-
-    if @answer.save
-      # flash[:notice] = "Answer has been created"
-      # redirect_to question_path(@question)
-    else
-      flash[:notice] = 'Body is empty'
-      render :new
-    end
+    @answer.save
   end
 
   def destroy
@@ -30,7 +22,6 @@ class AnswersController < ApplicationController
       flash[:alert] = 'Not enough rights'
     end
   end
-
 
   private
 
