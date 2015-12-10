@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../acceptance_helper'
 
 feature 'Delete the answer', %q{
   In order to delete answer
@@ -17,7 +17,7 @@ feature 'Delete the answer', %q{
 
     click_on 'Delete answer'
 
-    within "#answer-#{answer.id}" do
+    within '.answers' do
       expect(page).to_not have_content answer.body
     end
     expect(page).to have_content 'Answer has been deleted.'

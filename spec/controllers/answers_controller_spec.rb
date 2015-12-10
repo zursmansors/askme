@@ -36,9 +36,9 @@ RSpec.describe AnswersController, type: :controller do
         end.to_not change(Answer, :count)
       end
 
-      it 'render new template invalid_answer' do
-        post :create, question_id: question.id, answer: attributes_for(:invalid_answer), format: :js
-        expect(response).to render_template :new
+      it 'render crate template' do
+        post :create, answer: attributes_for(:invalid_answer), question_id: question, format: :js
+        expect(response).to render_template :create
       end
     end
   end

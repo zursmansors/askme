@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../acceptance_helper'
 
 feature "Show question and it's answers", %q{
   To find the answer to the current question

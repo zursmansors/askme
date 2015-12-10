@@ -22,7 +22,6 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
-gem 'devise'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -47,17 +46,18 @@ group :development do
 end
 
 gem 'slim-rails'
+gem 'devise'
 
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'database_cleaner'
+  gem 'capybara-webkit'
 end
 
 group :test do
   gem 'shoulda-matchers'
-  gem 'capybara'
-  gem 'launchy'
-  gem 'selenium-webdriver'
-  gem 'database_cleaner'
 end
 

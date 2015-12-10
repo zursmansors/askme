@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../acceptance_helper'
 
 feature 'Show questions titles list', %q{
   In order to choose an interesting question
