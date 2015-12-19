@@ -15,6 +15,7 @@ feature 'Create answer', %q{
     visit question_path(question)
     fill_in 'Your answer', with: 'My answer'
     click_on 'Add answer'
+    
     within '.answers' do
       expect(page).to have_content 'My answer'
     end

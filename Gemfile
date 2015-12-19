@@ -46,6 +46,8 @@ group :development do
 end
 
 gem 'slim-rails'
+gem 'bootstrap-sass', '~> 3.3.5'
+gem 'bootstrap_form'
 gem 'devise'
 
 group :development, :test do

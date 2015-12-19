@@ -1,0 +1,20 @@
+.panel.panel-default
+  .panel-heading
+    h3= @question.title
+  .panel-body
+    p= @question.body
+  .panel-footer
+    =link_to 'To the questions list', questions_path, class:['btn','btn-default']
+    -if user_signed_in? && current_user == @question.user
+      .btn-group
+        p= link_to 'Edit question', '', class: 'edit-question-link'
+        p= link_to 'Delete question', @question, method: :delete, data: {confirm: "Are you sure?"}, class:['btn','btn-default']
+        p
+        .edit-question
+          = form_for [@question], remote: true do |f|
+            .question-errors
+            = f.label :title
+            = f.text_field :title
+            = f.label :body
+            = f.text_area :body
+            = f.submit

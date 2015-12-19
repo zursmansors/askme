@@ -1,0 +1,5 @@
+= form_for [@question, @answer], remote: true do |f|
+  = f.label :body, 'Your answer'
+  .answer-errors
+  = f.text_area :body
+  = f.submit 'Add answer'

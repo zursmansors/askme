@@ -1,14 +1,15 @@
 - if user_signed_in?
     p= link_to 'Log out', destroy_user_session_path, method: :delete
+    p= link_to 'Ask question', new_question_path
 - else
     p= link_to 'Log in', new_user_session_path
     p= link_to 'Sign up', new_user_registration_path
-p= link_to 'Ask question', new_question_path
 h3
   | Questions list
 - if @questions.any?
   - @questions.each do |question|
-    div
+    .panel.panel-default
+    .panel-heading
       p= link_to question.title, question_path(question)
 - else
   div

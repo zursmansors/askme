@@ -1,19 +1,12 @@
-h3= @question.title
-p= @question.body
-=link_to 'To the questions list', questions_path
-br
--if current_user == @question.user
-  br
-    =link_to 'Delete question', @question, method: :delete, data: {confirm: "Are you sure?"}
-  br
+h4
+  | Question:
+.question
+ = render 'question'
+
 h4
   | Answers:
 .answers
   = render 'answers'
 
-
-= form_for [@question, @answer], remote: true do |f|
-  = f.label :body, 'Your answer'
-  .answer-errors
-  = f.text_area :body
-  = f.submit 'Add answer'
+answer-form
+  = render 'answers/form'

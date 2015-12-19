@@ -15,12 +15,14 @@ feature 'Delete the answer', %q{
 
     visit question_path(question)
 
-    click_on 'Delete answer'
-
     within '.answers' do
+      expect(page).to have_content answer.body
+      click_on 'Delete answer'
       expect(page).to_not have_content answer.body
+      # expect(page).to have_content 'Answer has been deleted.'
     end
-    expect(page).to have_content 'Answer has been deleted.'
+
+    
     expect(current_path).to eq question_path(question)
   end
 
@@ -34,9 +36,9 @@ feature 'Delete the answer', %q{
   scenario 'Not authenticated user tries to delete an answer', js: true do
     visit question_path(question)
 
-   within '.answers' do
-    expect(page).to_not have_content 'Delete answer'
-  end
+    within '.answers' do
+      expect(page).to_not have_content 'Delete answer'
+    end
 
   end
 end

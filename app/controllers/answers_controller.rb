@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :destroy]
+  before_action :authenticate_user!
   before_action :load_answer, only: [:update, :destroy]
-  before_action :load_question, only: [:new, :create,:destroy]
+  before_action :load_question, only: [:new, :create, :update, :destroy]
 
   def new
     @answer = @question.answers.new
@@ -13,13 +13,16 @@ class AnswersController < ApplicationController
     @answer.save
   end
 
+  def update
+    if current_user.author_of?(@answer)
+      @answer.update(answer_params)
+    end
+    @question = @answer.question
+  end
+
   def destroy
     if current_user.author_of?(@answer)
       @answer.destroy
-      flash[:notice] = 'Answer has been deleted.'
-      redirect_to question_path(@question)
-    else
-      flash[:alert] = 'Not enough rights'
     end
   end
 
