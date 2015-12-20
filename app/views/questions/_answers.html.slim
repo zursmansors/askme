@@ -1,9 +1,18 @@
 - @question.answers.each do |answer|
   -if answer.persisted?
     p= answer.body
-    -if user_signed_in? && current_user.author_of?(answer)
-      p class='pull-left' = link_to 'Edit', '', data: { answer_id: answer.id }, class: 'edit-answer-link'
-      p class='pull-center' = link_to "Delete answer", [@question, answer], remote: true, method: :delete, data: {confirm: 'Are you sure?'}
+
+  -if answer.best == true
+    p
+      span.badge = "Best answer"
+      br
+  -if user_signed_in?
+    -if current_user == @question.user && answer.id && answer.best == false
+        p= link_to 'Set as the best', set_best_question_answer_path(question_id: @question.id, id: answer.id), method: :patch, remote: true
+
+    -if current_user.author_of?(answer)
+      p= link_to 'Edit', '', data: { answer_id: answer.id }, class: 'edit-answer-link'
+      p= link_to 'Delete answer', [@question, answer], remote: true, method: :delete, data: {confirm: 'Are you sure?'}
       p
         = form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
           = f.label :body, "Answer"

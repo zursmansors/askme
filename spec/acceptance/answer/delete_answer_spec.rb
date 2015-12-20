@@ -7,8 +7,9 @@ feature 'Delete the answer', %q{
 } do
 
   given!(:user) { create :user }
+  given!(:other_user) { create :user }
   given!(:question) { create(:question, user: user) }
-  given!(:answer) { create(:answer, question: question, user: user)}
+  given!(:answer) { create(:answer, question: question, user: user) }
 
   scenario 'Authenticated user tries to delete his own answer', js: true do
     sign_in user
@@ -19,15 +20,13 @@ feature 'Delete the answer', %q{
       expect(page).to have_content answer.body
       click_on 'Delete answer'
       expect(page).to_not have_content answer.body
-      # expect(page).to have_content 'Answer has been deleted.'
     end
 
-    
     expect(current_path).to eq question_path(question)
   end
 
   scenario 'Authenticated user tries to delete someone other\'s answer', js: true do
-    sign_in user
+    sign_in other_user
     visit question_path(question)
 
     expect(page).to_not have_content 'Delete answer'

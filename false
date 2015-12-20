@@ -1,0 +1,2 @@
+      invoke  active_record
+      create    db/migrate/20151219204849_add_best_to_answers.rb

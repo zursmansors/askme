@@ -38,15 +38,15 @@ feature 'Answer editing', %q{
       visit question_path(question)
     end
 
-    scenario 'sees the link to Edit' do
+    scenario 'sees the link Edit' do
       within '.answers' do
         expect(page).to have_link 'Edit'
       end
     end
 
     scenario 'tries to edit his own answer', js: true do
-      click_on 'Edit'
       within '.answers' do
+        click_on 'Edit'
         fill_in 'Answer', with: 'edited answer'
         click_on 'Save'
 
