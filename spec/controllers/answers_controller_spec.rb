@@ -89,8 +89,8 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     it 'render destroy template' do
-        delete :destroy, id: answer, question_id: question, format: :js
-        expect(response).to render_template :destroy
+      delete :destroy, id: answer, question_id: question, format: :js
+      expect(response).to render_template :destroy
     end
   end
 
@@ -102,21 +102,21 @@ RSpec.describe AnswersController, type: :controller do
       patch :set_best, id: answer, question_id: question, format: :js
     end
 
+    it 'sets best answer to true' do
+      answer.reload
+      expect(answer.best).to eq true
+    end
+
     it 'assigns the question' do
-        expect(assigns(:question)).to eq question
+      expect(assigns(:question)).to eq question
     end
 
     it 'assigns the answer' do
-        expect(assigns(:answer)).to eq answer
-    end
-
-    it 'sets best answer to true' do
-        answer.reload
-        expect(answer.best).to eq true
+      expect(assigns(:answer)).to eq answer
     end
 
     it 'render set_best template' do
-        expect(response).to render_template :set_best
+      expect(response).to render_template :set_best
     end
   end
 end

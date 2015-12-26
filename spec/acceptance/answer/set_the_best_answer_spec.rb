@@ -11,6 +11,7 @@ feature 'Set best answer', %q{
   given(:question) { create(:question, user: user) }
   given!(:foreign_question) { create(:question, user: another_user) }
   given!(:answer) { create(:answer, question: question, user: user) }
+  # given!(:answers) { create_list(:answer, 3, question: question, user: user) }
 
   scenario 'Unauthenticated user tries to set the best answer' do
     visit question_path(question)

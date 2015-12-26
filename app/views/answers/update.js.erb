@@ -3,5 +3,5 @@
     $('.answer-errors').html('<%= j message %>');
   <% end %>
 <% else %>
-  $('.answers').html('<%= j render 'questions/answers' %>');  
+  $('.answers').replaceWith('<%= j render 'questions/answers' %>');
 <% end %>
