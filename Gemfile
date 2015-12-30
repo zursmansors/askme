@@ -46,9 +46,11 @@ group :development do
 end
 
 gem 'slim-rails'
+gem 'devise'
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'bootstrap_form'
-gem 'devise'
+gem 'carrierwave'
+
 
 group :development, :test do
   gem 'rspec-rails'
