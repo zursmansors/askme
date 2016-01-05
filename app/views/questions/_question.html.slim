@@ -3,6 +3,10 @@
     h3= @question.title
   .panel-body
     p= @question.body
+    p Attachments:
+    ul
+      - @question.attachments.each do |a|
+        li= a.file.file.filename
   .panel-footer
     =link_to 'To the questions list', questions_path, class:['btn','btn-default']
     -if user_signed_in? && current_user == @question.user
