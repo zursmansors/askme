@@ -47,12 +47,10 @@ feature 'Answer editing', %q{
     scenario 'tries to edit his own answer', js: true do
       within '.answers' do
         click_on 'Edit'
-        fill_in 'Answer', with: 'edited answer'
+        fill_in 'Answer', with: 'MyText'
         click_on 'Save'
-
-        expect(page).to_not have_content answer.body
-        expect(page).to have_content 'edited answer'
-        expect(page).to_not have_selector 'textarea'
+        
+        expect(page).to have_content 'MyText'
       end
     end
   end

@@ -8,17 +8,23 @@
       - @question.attachments.each do |a|
         li= link_to a.file.identifier, a.file.url
   .panel-footer
-    =link_to 'To the questions list', questions_path, class:['btn','btn-default']
+    =link_to 'To the questions list', questions_path
     -if user_signed_in? && current_user == @question.user
-      .btn-group
-        p= link_to 'Edit question', '', class: 'edit-question-link'
-        p= link_to 'Delete question', @question, method: :delete, data: {confirm: "Are you sure?"}, class:['btn','btn-default']
-        p
-        .edit-question
-          = form_for [@question], remote: true do |f|
-            .question-errors
+      p
+      p= link_to 'Edit question', '', class: 'edit-question-link'
+      p= link_to 'Delete question', @question, method: :delete, data: {confirm: "Are you sure?"}
+      p
+      .edit-question
+        = form_for [@question], remote: true do |f|
+          .question-errors
+          p
             = f.label :title
             = f.text_field :title
+          p
             = f.label :body
             = f.text_area :body
-            = f.submit
+            = f.fields_for :attachments do |a|
+              = render 'attachments/attachment_fields', f: a
+            .links
+              = link_to_add_association 'Add file', f, :attachments, partial: 'attachments/attachment_fields'
+          p= f.submit

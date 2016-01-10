@@ -3,6 +3,7 @@
   .answer-errors
   = f.text_area :body
   = f.fields_for :attachments do |a|
-    = a.label :file
-    = a.file_field :file
-  = f.submit 'Add answer'
+    = render 'attachments/attachment_fields', f: a
+  .links
+    = link_to_add_association 'Add file', f, :attachments, partial: 'attachments/attachment_fields'
+  p= f.submit 'Add answer'
