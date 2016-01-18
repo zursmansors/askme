@@ -2,6 +2,8 @@ h1
   | Question:
 .question
  = render 'question'
+.question-vote id="#{dom_id(@question)}"
+ = render 'votes', locals: { object: @question }
 
 h4
   | Answers:

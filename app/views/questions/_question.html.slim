@@ -13,7 +13,6 @@
       p
       p= link_to 'Edit question', '', class: 'edit-question-link'
       p= link_to 'Delete question', @question, method: :delete, data: {confirm: "Are you sure?"}
-      p
       .edit-question
         = form_for [@question], remote: true do |f|
           .question-errors
@@ -28,8 +27,8 @@
             .links
               = link_to_add_association 'Add file',
                                         f,
-                                        :attachments, 
-                                        { :'data-association-insertion-method' => :before, 
+                                        :attachments,
+                                        { :'data-association-insertion-method' => :before,
                                           partial: 'attachments/attachment_fields' }
           p= f.submit
           = link_to 'Cancel', question_path(@question), class: 'btn btn-default'

@@ -1,0 +1,8 @@
+.panel.panel-default
+  .panel-footer
+    | Rating:
+    -if user_signed_in? && current_user != @question.user
+      p Votes:
+      p= link_to 'Up'
+      p= link_to 'Down'
+      p= link_to 'Reset'
