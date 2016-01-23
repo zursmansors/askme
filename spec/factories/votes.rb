@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :vote do
     user
-    value 1
+    value 0
     association :voteable
   end
 
