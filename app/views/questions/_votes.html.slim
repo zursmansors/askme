@@ -1,8 +1,16 @@
 .panel.panel-default
   .panel-footer
-    | Rating:
+    .row
+      | Rating: #{object.votes.rating}
+  .row.question-votes-links
     -if user_signed_in? && current_user != @question.user
-      p Votes:
-      p= link_to 'Up'
-      p= link_to 'Down'
-      p= link_to 'Reset'
+      .col-md-1
+        | Votes:
+      - if object.user_voted?(current_user)
+        .col-md-1
+          = link_to 'Reset', vote_reset_question_path(@question), method: :patch, remote: true, data: {type: :json}
+      - else
+        .col-md-1
+          = link_to 'Up', vote_up_question_path(@question), method: :patch, remote: true, data: {type: :json}
+        .col-md-1
+          = link_to 'Down', vote_down_question_path(@question), method: :patch, remote: true, data: {type: :json}

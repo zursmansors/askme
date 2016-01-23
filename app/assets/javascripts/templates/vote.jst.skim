@@ -1,0 +1,15 @@
+.panel.panel-default
+  .panel-footer
+    .row
+      | Rating: #{@object.rating}
+  .row.question-votes-links
+    .col-md-1
+      | Votes:
+    - if @object.user_voted
+      .col-md-1
+        a href=@object.vote_reset_url data-method="patch" data-remote="true" Reset
+    - else
+      .col-md-1
+        a href=@object.vote_up_url data-method="patch" data-remote="true" Up
+      .col-md-1
+        a href=@object.vote_down_url data-method="patch" data-remote="true" Down

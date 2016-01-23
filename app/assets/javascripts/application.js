@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.remotipart
+//= require skim
 //= require cocoon
 //= require turbolinks
 //= require_tree .

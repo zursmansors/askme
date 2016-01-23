@@ -6,29 +6,30 @@ module Votable
   end
 
   def vote_up(user)
-    set_vote(user, 1)
+    set_vote(1, user)
   end
 
   def vote_down(user)
-    set_vote(user, -1)
+    set_vote(-1, user)
   end
 
   def vote_reset(user)
-    delete_vote(user)
+    reset_vote(user)
   end
 
-  def voted_for?(user)
-    votes.any? && votes.rating != 0
+  def user_voted?(user)
+    puts votes.find_by(user: user) ? true : false
+    votes.find_by(user: user) ? true : false
   end
 
   private
 
-  def set_vote(user, value)
+  def set_vote(value, user)
     vote = votes.find_or_create_by(user: user)
-    vote.update_vote(value)
+    vote.set_vote(value)
   end
 
-  def delete_vote(user)
+  def reset_vote(user)
     vote = votes.find_by(user: user)
     vote.reset_vote unless vote.nil?
   end

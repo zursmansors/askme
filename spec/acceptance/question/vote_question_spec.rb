@@ -14,7 +14,7 @@ feature 'Vote for the question', %q{
   scenario 'Unauthenticated user tries to vote for question' do
     visit question_path(question)
 
-    within '.question-vote' do
+    within '.question-votes' do
       expect(page).to_not have_link 'Up'
       expect(page).to_not have_link 'Down'
       expect(page).to_not have_link 'Reset'
@@ -29,7 +29,7 @@ feature 'Vote for the question', %q{
     scenario 'Question owner does not see the links for voting question', js: true do
       visit question_path(question)
 
-      within '.question-vote' do
+      within '.question-votes' do
         expect(page).to_not have_link 'Up'
         expect(page).to_not have_link 'Down'
         expect(page).to_not have_link 'Reset'
@@ -39,23 +39,23 @@ feature 'Vote for the question', %q{
     scenario 'Not question owner sees the links for voting question', js: true do
       visit question_path(foreign_question)
 
-      within '.question-vote' do
+      within '.question-votes' do
         expect(page).to have_link 'Up'
         expect(page).to have_link 'Down'
-        # expect(page).to_not have_link 'Reset'
+        expect(page).to_not have_link 'Reset'
       end
     end
 
     scenario 'Not question owner votes for question', js: true do
       visit question_path(foreign_question)
 
-      within '.question-vote' do
+      within '.question-votes' do
         click_on 'Up'
+        save_and_open_page
         expect(page).to have_link 'Reset'
         expect(page).to have_content '1'
       end
-  end
-
+    end
   end
 end
 
