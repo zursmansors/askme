@@ -9,11 +9,6 @@ ready = ->
     $('.edit-question').show()
 
 $ ->
-  $('.question-block').bind 'ajax:success', '.votes', (e, data, status, xhr) ->
-     question = $.parseJSON(xhr.responseText)
-     $(".question-votes#question_#{question.id}").html(JST["templates/vote"]({object: question}))
-
-$ ->
   $('.question-votes').bind 'ajax:success', (e, data, status, xhr) ->
     question = $.parseJSON(xhr.responseText)
     $('.question-votes').html(JST["templates/vote"]({object: question}))

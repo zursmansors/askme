@@ -4,14 +4,17 @@
 
 ready = ->
   # Это наш обработчик, перенесенный сюда из document.ready ($ ->)
-  # $('.edit-answer-link').click (e) ->
+  $('.edit-answer-link').click (e) ->
   $('.answers').on 'click', '.edit-answer-link', (e) ->
     e.preventDefault();
     $(this).hide();
     answer_id = $(this).data('answerId')
     $('form#edit-answer-' + answer_id).show()
 
-  #  Здесь могут быть другие обработчики событий и прочий код
+$ ->
+  $('.answer-votes').bind 'ajax:success', (e, data, status, xhr) ->
+    answer = $.parseJSON(xhr.responseText)
+    $(".answer-votes#answer_#{answer.id}").html(JST["templates/vote"]({object: answer}))
 
 $(document).ready(ready) # "вешаем" функцию ready на событие document.ready
 $(document).on('page:load', ready)  # "вешаем" функцию ready на событие page:load

@@ -1,9 +1,9 @@
 h1
   | Question:
 .question
- = render 'question'
+  = render 'question'
 .question-votes
- = render 'votes', object: @question
+  = render 'votes/votes', object: @question
 
 h4
   | Answers:

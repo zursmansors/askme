@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   sign_in_user
-  let(:answer) { create(:answer, question: question, user: @user) }
   let!(:question) { create(:question, user: @user) }
+  let(:other_user) { create(:user) }
+  let(:answer) { create(:answer, question: question, user: @user) }
+  let(:foreign_answer) { create(:answer, question: question, user: other_user) }
 
   describe 'POST #create' do
     context 'with valid attributes' do
@@ -122,50 +124,40 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #vote_up' do
     sign_in_user
-    let(:answer) { create(:answer, question: question, user: @user) }
-    let(:answer_second) { create(:answer, question: question, user: user_second) }
 
-    it 'increase vote for smb answer' do
-      patch :vote_up, id: answer, question_id: question, format: :json
-      answer.reload
-      expect(answer.votes.rating).to eq 1
-      # expect(answer.votes.upvotes.rating).to eq 1
+    it 'increase vote for not owner answer' do
+      expect { patch :vote_up, question_id: question, id: foreign_answer, format: :json }.to change(foreign_answer.votes, :count)
+      expect(foreign_answer.votes.rating).to eq 1
+      expect(response).to render_template :vote
     end
 
-  #   it 'increase vote for smb answer' do
-  #     expect { patch :vote_up, question_id: question, id: answer_second, format: :json }.to change(answer_second.votes, :count)
-  #     expect(answer_second.votes.rating).to eq 1
-  #     expect(response).to render_template :vote
-  #   end
-
-  #   it 'does not change vote for own answer' do
-  #     expect { patch :vote_up, id: question, format: :json }.to_not change(question.votes, :count)
-  #   end
+    it 'does not change vote for owner answer' do
+      expect { patch :vote_up, question_id: question, id: answer, format: :json }.to_not change(answer.votes, :count)
+    end
   end
 
-  # describe 'PATCH #vote_down' do
-  #   sign_in_user
-  #   let(:question) { create(:question, user: @user) }
+  describe 'PATCH #vote_down' do
+    sign_in_user
 
-  #   it 'decrease vote for smb question' do
-  #     expect { patch :vote_down, id: foreign_question, format: :json }.to change(foreign_question.votes, :count)
-  #     expect(foreign_question.votes.rating).to eq -1
-  #     expect(response).to render_template :vote
-  #   end
+    it 'decrease vote for not owner answer' do
+      expect { patch :vote_down, question_id: question, id: foreign_answer, format: :json }.to change(foreign_answer.votes, :count)
+      expect(foreign_answer.votes.rating).to eq -1
+      expect(response).to render_template :vote
+    end
 
-  #   it 'does not change vote for own question' do
-  #     expect { patch :vote_down, id: question, format: :json }.to_not change(question.votes, :count)
-  #   end
-  # end
+    it 'does not change vote for own question' do
+      expect { patch :vote_up, question_id: question, id: answer, format: :json }.to_not change(answer.votes, :count)
+    end
+  end
 
-  # describe 'PATCH #vote_reset' do
-  #   sign_in_user
+  describe 'PATCH #vote_reset' do
+    sign_in_user
 
-  #   it 'reset vote for smb question' do
-  #     patch :vote_up, id: foreign_question, format: :json
-  #     expect { patch :vote_reset, id: foreign_question, format: :json }.to change(foreign_question.votes, :count)
-  #     expect(foreign_question.votes.rating).to eq 0
-  #     expect(response).to render_template :vote
-  #   end
-  # end
+    it 'reset vote for smb question' do
+      patch :vote_up, question_id: question, id: foreign_answer, format: :json
+      expect { patch :vote_reset, question_id: question, id: foreign_answer, format: :json }.to change(foreign_answer.votes, :count)
+      expect(foreign_answer.votes.rating).to eq 0
+      expect(response).to render_template :vote
+    end
+  end
 end

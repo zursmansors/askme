@@ -19,7 +19,7 @@ feature 'Delete file from question', %q{
       expect(page).to have_link 'rails_helper.rb'
 
       click_on 'Edit question'
-      click_on 'Remove Attachment'
+      click_on 'Remove file'
       click_on 'Update Question'
 
       expect(page).to_not have_link 'rails_helper.rb'

@@ -2,7 +2,7 @@
   .panel-footer
     .row
       | Rating: #{@object.rating}
-  .row.question-votes-links
+  .row
     .col-md-1
       | Votes:
     - if @object.user_voted
