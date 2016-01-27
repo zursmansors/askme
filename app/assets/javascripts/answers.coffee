@@ -4,7 +4,6 @@
 
 ready = ->
   # Это наш обработчик, перенесенный сюда из document.ready ($ ->)
-  $('.edit-answer-link').click (e) ->
   $('.answers').on 'click', '.edit-answer-link', (e) ->
     e.preventDefault();
     $(this).hide();

@@ -18,14 +18,14 @@ module Votable
   end
 
   def user_voted?(user)
-    puts votes.find_by(user: user) ? true : false
+    puts !!votes.find_by(user: user)
     votes.find_by(user: user) ? true : false
   end
 
   private
 
   def set_vote(value, user)
-    vote = votes.find_or_create_by(user: user)
+    vote = votes.find_or_initialize_by(user: user)
     vote.set_vote(value)
   end
 

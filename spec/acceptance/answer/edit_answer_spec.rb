@@ -49,7 +49,7 @@ feature 'Answer editing', %q{
         click_on 'Edit'
         fill_in 'Answer', with: 'MyText'
         click_on 'Save'
-        
+
         expect(page).to have_content 'MyText'
       end
     end
