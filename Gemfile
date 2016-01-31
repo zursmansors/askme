@@ -52,8 +52,9 @@ gem 'bootstrap-sass', '~> 3.3.5'
 gem 'bootstrap_form'
 gem 'carrierwave'
 gem 'remotipart'
-gem "cocoon"
-
+gem 'cocoon'
+gem 'private_pub'
+gem 'thin'
 
 group :development, :test do
   gem 'rspec-rails'

@@ -8,10 +8,13 @@ ready = ->
     $(this).hide();
     $('.edit-question').show()
 
-$ ->
   $('.question-votes').bind 'ajax:success', (e, data, status, xhr) ->
     question = $.parseJSON(xhr.responseText)
     $('.question-votes').html(JST["templates/vote"]({object: question}))
+
+  PrivatePub.subscribe '/questions', (data, channel) ->
+    question = $.parseJSON(data['question'])
+    $('.question-list').append(JST['templates/question']({question: question}));
 
 $(document).ready(ready) # "вешаем" функцию ready на событие document.ready
 $(document).on('page:load', ready)  # "вешаем" функцию ready на событие page:load

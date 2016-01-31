@@ -17,7 +17,7 @@
             p= link_to 'Edit', '', data: { answer_id: answer.id }, class: 'edit-answer-link'
             p= link_to 'Delete answer', [@question, answer], remote: true, method: :delete, data: {confirm: 'Are you sure?'}
             p
-              = form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+              = form_for [@question, answer], remote: true do |f|
                 p= f.label :body, "Answer"
                 p= f.text_area :body
                 = f.fields_for :attachments do |a|

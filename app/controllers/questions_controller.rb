@@ -22,12 +22,35 @@ class QuestionsController < ApplicationController
   def create
     @question = current_user.questions.new(question_params)
 
+    # if @question.save
+    #   flash[:notice] = 'Your question successfully created.'
+    #   redirect_to @question
+    # else
+    #   render :new
+    # end
+
+    # if @question.save
+    #   PrivatePub.publish_to '/questions', question: @question.to_json
+    #   redirect_to @question
+    # else
+    #   render :new
+    # end
+
     if @question.save
-      flash[:notice] = 'Your question successfully created.'
+      PrivatePub.publish_to "/questions", question: render_to_string('questions/show.json.jbuilder')
+      flash[:notice] = 'Your question successfully created'
       redirect_to @question
     else
       render :new
     end
+
+    # if @question.save
+    #   PrivatePub.publish_to "/questions", question: @question.to_json
+    #   flash[:notice] = 'Your question successfully created'
+    #   redirect_to @question
+    # else
+    #   render :new
+    # end
   end
 
   def update

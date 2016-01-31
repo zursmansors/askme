@@ -6,11 +6,11 @@
     p= link_to 'Sign up', new_user_registration_path
 h3
   | Questions list
-- if @questions.any?
-  - @questions.each do |question|
-    .panel.panel-default
-    .panel-heading
-      p= link_to question.title, question_path(question)
-- else
-  div
-    | Questions is empty
+.question-list
+- @questions.each do |question|
+  .row.question id="#{dom_id(question)}"
+  .panel.panel-default
+  .panel-heading
+    = link_to question.title, question_path(question)
+
+= subscribe_to "/questions"
