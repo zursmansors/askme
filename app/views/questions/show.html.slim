@@ -4,6 +4,8 @@ h1
   = render 'question'
 .question-votes
   = render 'votes/votes', object: @question
+.question-comments
+  = render 'comments/form'
 
 h4
   | Answers:
@@ -14,3 +16,4 @@ answer-form
   = render 'answers/form'
 
 =subscribe_to "/questions/#{@question.id}/answers"
+=subscribe_to "/questions/#{@question.id}/comments"
