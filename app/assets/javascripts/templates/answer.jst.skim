@@ -1,0 +1,56 @@
+.panel.panel-default
+  .panel-heading
+    - @question.answers.each do |answer|
+      -if answer.persisted?
+        .panel-footer
+          p= answer.body
+          ul
+            - for attachment in @answer.attachments
+              li
+                a href=attachment.file_url
+                  = attachment.file_name
+        -if answer.best == true
+          p
+            span.badge = "Best answer"
+        -if current_user == @question.user && answer.id && answer.best == false
+            a href = @answer.answer_link_set_best data-remote="true" data-method="patch"
+        / -if current_user.author_of?(answer)
+        /   p= link_to 'Edit', '', data: { answer_id: answer.id }, class: 'edit-answer-link'
+        /   p= link_to 'Delete answer', [@question, answer], remote: true, method: :delete, data: {confirm: 'Are you sure?'}
+        /   p
+        /     = form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+        /       p= f.label :body, "Answer"
+        /       p= f.text_area :body
+        /       = f.fields_for :attachments do |a|
+        /         = render 'attachments/attachment_fields', f: a
+        /       .links
+        /         = link_to_add_association 'Add file', f, :attachments, partial: 'attachments/attachment_fields'
+        /       p= f.submit 'Save'
+        .answer-votes id="answer_#{@answer.id}"
+          .panel.panel-default
+            .panel-footer
+              .row
+                | Rating: #{@object.rating}
+            .row
+              .col-md-1
+                | Votes:
+              - if @object.user_voted
+                .col-md-1
+                  a href=@object.vote_reset_url data-method="patch" data-remote="true" Reset
+              - else
+                .col-md-1
+                  a href=@object.vote_up_url data-method="patch" data-remote="true" Up
+                .col-md-1
+                  a href=@object.vote_down_url data-method="patch" data-remote="true" Down
+        .comments-list id=@answer.dom_id
+          - if @answer.comments.length > 0
+            - for c in @answer.comments
+              li = c.body
+        - if @answer.user_is_signed
+          .add-comment data-commentable-id = @answer.commentable_id
+            form.new_comment id="new_comment" method="post" action="/answers/#{@answer.commentable_id}/comments" data-remote="true"
+              input name="utf8" type="hidden" value="&#x2713;"
+              textarea name="comment[body]" id="comment_body"
+              br
+                input type="submit" name="commit" value="Add comment"
+

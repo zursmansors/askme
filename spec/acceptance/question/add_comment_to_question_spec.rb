@@ -12,15 +12,19 @@ feature 'Add comment to question', %q{
   scenario 'Authenticated user comments question', js: true do
     sign_in user
     visit question_path question
-    fill_in 'Comment', with: 'Test comment'
-    click_on 'Add comment'
+
+    within '.comment' do
+      fill_in 'Comment', with: 'Test comment'
+      click_on 'Add Comment'
+    end
 
     expect(page).to have_content 'Test comment'
-    expect(current_path).to eq question_path(question)
   end
 
   scenario 'Non-authenticated user tries to comment question' do
     visit question_path question
-    expect(page).to_not have_content 'Add comment'
+    within '.question-comments' do
+      expect(page).to_not have_content 'Add Comment'
+    end
   end
 end

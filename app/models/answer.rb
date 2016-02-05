@@ -1,7 +1,8 @@
 class Answer < ActiveRecord::Base
 
   include Votable
-  
+  include Commentable
+
   belongs_to :question
   belongs_to :user
   has_many   :attachments, as: :attachable, dependent: :destroy
@@ -18,5 +19,4 @@ class Answer < ActiveRecord::Base
       update!(best: true)
     end
   end
-
 end

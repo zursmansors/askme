@@ -1,7 +1,8 @@
 - if user_signed_in?
   .add-comment data={commentable_id: "#{commentable.id}"}
+  .comment
     = form_for [commentable, Comment.new], remote: true do |f|
-      = f.label :body, 'Comment'
+      p= f.label :body, 'Comment'
       = f.text_area :body
       br
       = f.submit 'Add Comment'

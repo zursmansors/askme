@@ -20,21 +20,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = current_user.questions.new(question_params)
-
-    # if @question.save
-    #   flash[:notice] = 'Your question successfully created.'
-    #   redirect_to @question
-    # else
-    #   render :new
-    # end
-
-    # if @question.save
-    #   PrivatePub.publish_to '/questions', question: @question.to_json
-    #   redirect_to @question
-    # else
-    #   render :new
-    # end
+    @question = Question.new(question_params.merge({ user: current_user }))
 
     if @question.save
       PrivatePub.publish_to "/questions", question: render_to_string('questions/show.json.jbuilder')
@@ -43,14 +29,6 @@ class QuestionsController < ApplicationController
     else
       render :new
     end
-
-    # if @question.save
-    #   PrivatePub.publish_to "/questions", question: @question.to_json
-    #   flash[:notice] = 'Your question successfully created'
-    #   redirect_to @question
-    # else
-    #   render :new
-    # end
   end
 
   def update

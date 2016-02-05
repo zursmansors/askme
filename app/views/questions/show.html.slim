@@ -5,7 +5,9 @@ h1
 .question-votes
   = render 'votes/votes', object: @question
 .question-comments
-  = render 'comments/form'
+  .comments-list id="#{dom_id(@question)}"
+  = render @question.comments
+  = render 'comments/form', commentable: @question
 
 h4
   | Answers:
@@ -15,5 +17,6 @@ h4
 answer-form
   = render 'answers/form'
 
-=subscribe_to "/questions/#{@question.id}/answers"
-=subscribe_to "/questions/#{@question.id}/comments"
+= subscribe_to "/questions/#{@question.id}/answers"
+= subscribe_to "/questions/#{@question.id}/comments"
+= subscribe_to "/questions/#{@question.id}/answers/comments"

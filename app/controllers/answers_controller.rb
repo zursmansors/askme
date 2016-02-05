@@ -10,17 +10,9 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
+    @answer = @question.answers.new(answer_params.merge({ user: current_user }))
 
-    respond_to do |format|
-      if @answer.save
-        format.js 
-      else
-        format.js
-      end
-    end
-    # @answer.save
+    PrivatePub.publish_to "/questions/#{@question.id}/answers", answer: render_to_string('answers/show.json.jbuilder') if @answer.save
   end
 
   def update
