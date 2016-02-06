@@ -1,4 +1,4 @@
 .row.question id="question_#{@question.id}"
-.panel.panel-default
-.panel-heading
-  a href=@question.view_url = @question.title
+  .panel.panel-default
+  .panel-heading
+    a href=@question.view_url = @question.title

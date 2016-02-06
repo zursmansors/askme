@@ -9,8 +9,8 @@ h3
 .question-list
 - @questions.each do |question|
   .row.question id="#{dom_id(question)}"
-  .panel.panel-default
-  .panel-heading
-    = link_to question.title, question_path(question)
+    .panel.panel-default
+    .panel-heading
+      = link_to question.title, question_path(question)
 
 = subscribe_to "/questions"

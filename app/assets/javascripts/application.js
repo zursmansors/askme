@@ -17,5 +17,7 @@
 //= require skim
 //= require cocoon
 //= require turbolinks
-//= require_tree .
 //= require bootstrap
+//= require answers
+//= require questions
+//= require_tree ./templates

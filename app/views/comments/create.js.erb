@@ -3,6 +3,6 @@
     $('.answer-errors').html('<%= j message %>');
   <% end %>
 <% else %>
-  $(".commentslist#<%= @comment.commentable_type.downcase %>_<%= @comment.commentable_id %>").append("<%= j render(@comment) %>");
+  $(".comments-list#<%= @comment.commentable_type.downcase %>_<%= @comment.commentable_id %>").append("<%= j render(@comment) %>");
   $('form#new_comment textarea').val('');
 <% end %>
