@@ -1,6 +1,6 @@
 h1
   | Question:
-.question
+.question data-question-id = @question.id
   = render 'question'
 .question-votes
   = render 'votes/votes', object: @question
@@ -9,7 +9,7 @@ h1
   = render @question.comments
   = render 'comments/form', commentable: @question
 
-h4
+h2
   | Answers:
 .answers
   = render 'answers'
