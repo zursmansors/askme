@@ -11,16 +11,16 @@
           - if object.kind_of? Question
             = link_to 'Reset', vote_reset_question_path(object), method: :patch, remote: true, data: {type: :json}
           - if object.kind_of? Answer
-            = link_to 'Reset', vote_reset_question_answer_path(id: object, question_id: object.question_id), method: :patch, remote: true, data: {type: :json}
+            = link_to 'Reset', vote_reset_answer_path(id: object, question_id: object.question_id), method: :patch, remote: true, data: {type: :json}
       - else
         .col-md-1
           - if object.kind_of? Question
             = link_to 'Up', vote_up_question_path(object), method: :patch, remote: true, data: {type: :json}
           - if object.kind_of? Answer
-            = link_to 'Up', vote_up_question_answer_path(id: object, question_id: object.question_id), method: :patch, remote: true, data: {type: :json}
+            = link_to 'Up', vote_up_answer_path(id: object, question_id: object.question_id), method: :patch, remote: true, data: {type: :json}
         .col-md-1
           - if object.kind_of? Question
             = link_to 'Down', vote_down_question_path(object), method: :patch, remote: true, data: {type: :json}
           - if object.kind_of? Answer
-            = link_to 'Down', vote_down_question_answer_path(id: object, question_id: object.question_id), method: :patch, remote: true, data: {type: :json}
+            = link_to 'Down', vote_down_answer_path(id: object, question_id: object.question_id), method: :patch, remote: true, data: {type: :json}
 

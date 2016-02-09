@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_answer, only: [:update, :destroy, :set_best]
-  before_action :load_question, only: [:new, :create, :update, :destroy, :set_best]
+  before_action :load_question, only: [:new, :create, :set_best]
 
   include Voted
 

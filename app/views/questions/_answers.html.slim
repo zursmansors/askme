@@ -12,10 +12,10 @@
             span.badge = "Best answer"
         -if user_signed_in?
           -if current_user == @question.user && answer.id && answer.best == false
-            p= link_to 'Set as the best', set_best_question_answer_path(question_id: @question.id, id: answer.id), method: :patch, remote: true
+            p= link_to 'Set as the best', set_best_answer_path(question_id: @question.id, id: answer.id), method: :patch, remote: true
           -if current_user.author_of?(answer)
             p= link_to 'Edit', '', data: { answer_id: answer.id }, class: 'edit-answer-link'
-            p= form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+            p= form_for [answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
                 p= f.label :body, "Answer"
                 p= f.text_area :body
                 = f.fields_for :attachments do |a|
@@ -23,7 +23,7 @@
                 .links
                   = link_to_add_association 'Add file', f, :attachments, partial: 'attachments/attachment_fields'
                 p= f.submit 'Save'
-            p= link_to 'Delete answer', [@question, answer], remote: true, method: :delete, data: {confirm: 'Are you sure?'}
+            p= link_to 'Delete answer', [answer], remote: true, method: :delete, data: {confirm: 'Are you sure?'}
         .answer-votes id="#{dom_id(answer)}"
           = render 'votes/votes', object: answer
         .comments-list id="#{dom_id(answer)}"

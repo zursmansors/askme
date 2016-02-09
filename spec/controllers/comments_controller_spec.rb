@@ -13,10 +13,10 @@ RSpec.describe CommentsController, type: :controller do
       it "saves the new question's commment in the database" do
         expect { post :create, question_id: question, comment: attributes_for(:comment), format: :js }.to change(question.comments, :count).by(1)
       end
-    end
 
-    it "saves the new answer's commment in the database" do
-      expect { post :create, answer_id: answer, comment: attributes_for(:comment), format: :js }.to change(answer.comments, :count).by(1)
+      it "saves the new answer's commment in the database" do
+        expect { post :create, answer_id: answer, comment: attributes_for(:comment), format: :js }.to change(answer.comments, :count).by(1)
+      end
     end
 
     context 'with invalid attributes' do
