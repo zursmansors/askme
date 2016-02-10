@@ -10,6 +10,8 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = @question.answers.build
+    gon.user_id = current_user.id if current_user
+    gon.question_user_id = @question.user_id
   end
 
   def new

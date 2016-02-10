@@ -7,44 +7,46 @@
           li.attach id = "attachment_#{attach.id}"
             a href = attach.url
               = attach.title
-      a href=@answer.set_best_url data-method="patch" data-remote="true" id="set-best-link-#{@answer.id}"
+      - if gon.question_user_id == gon.user_id
+        a href=@answer.set_best_url data-method="patch" data-remote="true" Set as the best
       - if @answer.is_best
         p
           span.badge = "Best answer"
-      p
-        a href='' class="edit-answer-link" data-answer-id=@answer.id Edit
-      form.edit_answer id="edit-answer-#{@answer.id}" method="post" action="/answers/#{@answer.id}" data-remote="true"
-        input name="_method" type="hidden" value="patch"
-        textarea.text.required.form-control#answer_body name="answer[body]" = @answer.body
+      - if @answer.user_id == gon.user_id
         p
-          a.add_fields data-association="attachment" data-association-insertion-template=@answer.insertion_template href="#"
+          a href='' class="edit-answer-link" data-answer-id=@answer.id Edit
+        form.edit_answer id="edit-answer-#{@answer.id}" method="post" action="/answers/#{@answer.id}" data-remote="true"
+          input name="_method" type="hidden" value="patch"
+          textarea.text.required.form-control#answer_body name="answer[body]" = @answer.body
+          p
+            a.add_fields data-association="attachment" data-association-insertion-template=@answer.insertion_template href="#"
               | Add file
-        input.btn name="commit" type="submit" value="Save"
-      p
-        a href=@answer.destroy_url data-remote="true" data-method="delete" Delete answer
-      .panel.panel-default
-        .panel-footer
-          .row
-            | Rating: #{@answer.rating}
-        - if @current_user_id && !(@current_user_id == @answer.user_id)
-          .row
+          input.btn name="commit" type="submit" value="Save"
+        p
+          a href=@answer.destroy_url data-remote="true" data-method="delete" Delete answer
+        .panel.panel-default
+          .panel-footer
+            .row
+              | Rating: #{@answer.rating}
+      - else if @answer.user_id
+        .row
+          .col-md-1
+            | Votes:
+          - if @answer.user_voted
             .col-md-1
-              | Votes:
-            - if @answer.user_voted
-              .col-md-1
-                a href=@answer.vote_reset_url data-method="patch" data-remote="true" Reset
-            - else
-              .col-md-1
-                a href=@answer.vote_up_url data-method="patch" data-remote="true" Up
-              .col-md-1
-                a href=@answer.vote_down_url data-method="patch" data-remote="true" Down
-      .comments-list id=@answer.dom_id
-        - if @answer.comments.length > 0
-          - for c in @answer.comments
-            li = c.body
-      | Comment
-      .add-comment data-commentable-id = @answer.commentable_id
-        form.new_comment id="new_comment" method="post" action="/answers/#{@answer.commentable_id}/comments" data-remote="true"
-          textarea name="comment[body]" id="comment_body"
-          br
-            input type="submit" name="commit" value="Add comment"
+              a href=@answer.vote_reset_url data-method="patch" data-remote="true" Reset
+          - else
+            .col-md-1
+              a href=@answer.vote_up_url data-method="patch" data-remote="true" Up
+            .col-md-1
+              a href=@answer.vote_down_url data-method="patch" data-remote="true" Down
+    .comments-list id=@answer.dom_id
+      - if @answer.comments.length > 0
+        - for c in @answer.comments
+          li = c.body
+    | Comment
+    .add-comment data-commentable-id = @answer.commentable_id
+      form.new_comment id="new_comment" method="post" action="/answers/#{@answer.commentable_id}/comments" data-remote="true"
+        textarea name="comment[body]" id="comment_body"
+        br
+          input type="submit" name="commit" value="Add comment"

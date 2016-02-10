@@ -55,6 +55,7 @@ gem 'remotipart'
 gem 'cocoon'
 gem 'private_pub'
 gem 'thin'
+gem 'gon', git: 'git://github.com/gazay/gon.git'
 
 group :development, :test do
   gem 'rspec-rails'

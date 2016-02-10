@@ -5,7 +5,7 @@ json.vote_up_url vote_up_answer_path(id: @answer, question_id: @answer.question_
 json.vote_down_url vote_down_answer_path(@answer, question_id: @answer.question_id)
 json.vote_reset_url vote_reset_answer_path(@answer, question_id: @answer.question_id)
 json.destroy_url answer_path(id: @answer.id, question_id: @answer.question_id)
-json.set_best_url set_best_answer_path(@answer, question_id: @answer.question_id)
+json.set_best_url set_best_answer_path(question_id: @answer.question_id, id: @answer.id)
 
 json.attachments @answer.attachments do |a|
   json.id a.id
