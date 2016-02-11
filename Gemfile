@@ -56,6 +56,7 @@ gem 'cocoon'
 gem 'private_pub'
 gem 'thin'
 gem 'gon', git: 'git://github.com/gazay/gon.git'
+gem 'responders', '~> 2.0'
 
 group :development, :test do
   gem 'rspec-rails'
