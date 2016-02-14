@@ -16,13 +16,21 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if request.env['omniauth.auth']
       @auth = request.env['omniauth.auth']
     elsif session['devise.auth']
-      @auth = OmniAuth::AuthHash.new(provider: session['devise.auth']['provider'], uid: session['devise.auth']['uid'],
-                                     info: { email: params[:user][:email], name: session['devise.auth']['name'] })
+      @auth = OmniAuth::AuthHash.new(
+        provider: session['devise.auth']['provider'], uid: session['devise.auth']['uid'],
+        info: { email: params[:user][:email], name: session['devise.auth']['name'] })
     end
   end
 
   def authorization
-    return unless @auth
+    unless @auth
+      set_flash_message(
+        :notice,
+        :failure,
+        kind: "#{@auth.provider.capitalize}",
+        reason: 'An unexpected error has occurred when logging in')
+      redirect_to new_user_registration_url
+    end
 
     @user = User.find_for_oauth(@auth)
 
@@ -32,12 +40,13 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     elsif @auth.present?
       flash[:notice] = 'You should add your email'
 
-      session['devise.auth'] = Hash.new
-      session['devise.auth']['provider'] = request.env['omniauth.auth'].provider
-      session['devise.auth']['uid'] = request.env['omniauth.auth'].uid
-      session['devise.auth']['name'] = request.env['omniauth.auth'].info[:name]
+    session['devise.auth'] = {
+      provider: request.env['omniauth.auth'].provider,
+      uid: request.env['omniauth.auth'].uid,
+      name: request.env['omniauth.auth'].info[:name]
+    }
 
-      render 'authorization/add_email'
+    render 'authorization/add_email'
     end
   end
 end
