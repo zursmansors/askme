@@ -40,11 +40,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     elsif @auth.present?
       flash[:notice] = 'You should add your email'
 
-    session['devise.auth'] = {
-      provider: request.env['omniauth.auth'].provider,
-      uid: request.env['omniauth.auth'].uid,
-      name: request.env['omniauth.auth'].info[:name]
-    }
+    session['devise.auth'] = request.env['omniauth.auth']
 
     render 'authorization/add_email'
     end
