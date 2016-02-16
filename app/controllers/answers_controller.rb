@@ -8,6 +8,8 @@ class AnswersController < ApplicationController
 
   respond_to :js, :json
 
+  authorize_resource
+
   def new
     respond_with(@answer = @question.answers.new)
   end

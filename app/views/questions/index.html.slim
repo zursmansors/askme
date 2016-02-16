@@ -1,4 +1,4 @@
-- if user_signed_in?
+-if can?(:create, Question)
     p= link_to 'Log out', destroy_user_session_path, method: :delete
     p= link_to 'Ask question', new_question_path
 - else

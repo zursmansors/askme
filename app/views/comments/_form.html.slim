@@ -1,4 +1,4 @@
-- if user_signed_in?
+- if can? :create, Comment
   .add-comment data={commentable_id: "#{commentable.id}"}
   .comment
     = form_for [commentable, Comment.new], remote: true do |f|

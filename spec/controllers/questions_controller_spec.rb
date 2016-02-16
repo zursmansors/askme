@@ -93,11 +93,6 @@ RSpec.describe QuestionsController, type: :controller do
         question.reload
         expect(assigns(:question)).to eq question
       end
-
-      it 'render update template' do
-        patch :update, id: question, question: attributes_for(:question), format: :js
-        expect(response).to render_template :update
-      end
     end
 
     context 'invalid attributes' do
