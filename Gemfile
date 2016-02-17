@@ -61,6 +61,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter', '~> 1.2.1'
 gem 'cancancan'
+gem 'doorkeeper'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -73,5 +74,6 @@ end
 
 group :test do
   gem 'shoulda-matchers'
+  gem 'json_spec'
 end
 
