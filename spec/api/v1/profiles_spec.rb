@@ -55,10 +55,7 @@ describe 'Profile API' do
       let(:me) { create :user }
       let!(:other_users) { create_list(:user, 10) }
       let(:access_token) { create :access_token, resource_owner_id: me.id }
-<<<<<<< HEAD
       let(:user) { user = other_users.first }
-=======
->>>>>>> master
 
       before { get '/api/v1/profiles', format: :json, access_token: access_token.token }
 
@@ -67,7 +64,6 @@ describe 'Profile API' do
       end
 
       it 'contains users' do
-<<<<<<< HEAD
         expect(response.body).to be_json_eql(other_users.to_json).at_path("profiles")
       end
 
@@ -85,9 +81,6 @@ describe 'Profile API' do
         it "does not contain #{attr}" do
           expect(response.body).to_not have_json_path("profiles/0/#{attr}")
         end
-=======
-        expect(response.body).to be_json_eql(other_users.to_json)
->>>>>>> master
       end
     end
   end
