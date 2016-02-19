@@ -3,82 +3,62 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   sign_in_user
   let!(:question) { create(:question, user: @user) }
-  let(:other_user) { create(:user) }
   let(:answer) { create(:answer, question: question, user: @user) }
-  let(:foreign_answer) { create(:answer, question: question, user: other_user) }
 
   describe 'POST #create' do
     context 'with valid attributes' do
+      subject { post :create, answer: attributes_for(:answer), question_id: question, format: :js }
+
       it 'saves the new answer to the database' do
-        expect do
-          post :create,
-                question_id: question,
-                answer: attributes_for(:answer),
-                format: :js
-        end.to change(question.answers, :count).by(1)
+        expect { subject }.to change(@user.answers, :count).by(1)
+      end
+
+      it 'answer should be added to question' do
+        expect { subject }.to change(question.answers, :count).by(1)
       end
 
       it 'render create template' do
-        post :create,
-              question_id: question,
-              answer: attributes_for(:answer),
-              format: :js
+        subject
         expect(response).to render_template :create
+      end
+
+      it_behaves_like 'Publishable' do
+        let(:channel) { "/questions/#{question.id}/answers" }
       end
     end
 
     context 'with invalid attributes' do
+      subject { post :create, answer: attributes_for(:invalid_answer), question_id: question, format: :js }
+
       it 'does not save the answer in the database' do
-        expect do
-          post :create,
-               answer: attributes_for(:invalid_answer),
-               question_id: question,
-               format: :js
-        end.to_not change(Answer, :count)
+        expect { subject }.to_not change(Answer, :count)
       end
 
       it 'render create template' do
-        post :create,
-              answer: attributes_for(:invalid_answer),
-              question_id: question,
-              format: :js
+        subject
         expect(response).to render_template :create
       end
     end
   end
 
   describe 'PATCH #update' do
+    subject { patch :update, id: answer, question_id: question, answer: { body: 'new body' }, format: :js }
+    before { subject }
 
     it 'assigns the requested answer to @answer' do
-      patch :update, id: answer,
-                     question_id: question,
-                     answer: attributes_for(:answer),
-                     format: :js
       expect(assigns(:answer)).to eq answer
     end
 
     it 'assigns the question' do
-      patch :update, id: answer,
-                     question_id: question,
-                     answer: attributes_for(:answer),
-                     format: :js
       expect(assigns(:question)).to eq question
     end
 
     it 'changes answer attributes' do
-      patch :update, id: answer,
-                     question_id: question,
-                     answer: { body: 'new body'},
-                     format: :js
       answer.reload
       expect(answer.body).to eq 'new body'
     end
 
     it 'render update template' do
-      patch :update, id: answer,
-                     question_id: question,
-                     answer: attributes_for(:answer),
-                     format: :js
       expect(response).to render_template :update
     end
   end
@@ -122,42 +102,8 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-  describe 'PATCH #vote_up' do
-    sign_in_user
-
-    it 'increase vote for not owner answer' do
-      expect { patch :vote_up, question_id: question, id: foreign_answer, format: :json }.to change(foreign_answer.votes, :count)
-      expect(foreign_answer.votes.rating).to eq 1
-      expect(response).to render_template :vote
-    end
-
-    it 'does not change vote for owner answer' do
-      expect { patch :vote_up, question_id: question, id: answer, format: :json }.to_not change(answer.votes, :count)
-    end
-  end
-
-  describe 'PATCH #vote_down' do
-    sign_in_user
-
-    it 'decrease vote for not owner answer' do
-      expect { patch :vote_down, question_id: question, id: foreign_answer, format: :json }.to change(foreign_answer.votes, :count)
-      expect(foreign_answer.votes.rating).to eq -1
-      expect(response).to render_template :vote
-    end
-
-    it 'does not change vote for own question' do
-      expect { patch :vote_up, question_id: question, id: answer, format: :json }.to_not change(answer.votes, :count)
-    end
-  end
-
-  describe 'PATCH #vote_reset' do
-    sign_in_user
-
-    it 'reset vote for smb question' do
-      patch :vote_up, question_id: question, id: foreign_answer, format: :json
-      expect { patch :vote_reset, question_id: question, id: foreign_answer, format: :json }.to change(foreign_answer.votes, :count)
-      expect(foreign_answer.votes.rating).to eq 0
-      expect(response).to render_template :vote
-    end
+  it_behaves_like 'Votable', Answer do
+    let(:object) { create(:answer, question: question, user: user) }
+    let(:object_second) { create(:answer, question: question, user: other_user) }
   end
 end

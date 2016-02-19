@@ -3,8 +3,6 @@ require 'rails_helper'
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
   let(:question) { create(:question, user: user) }
-  let(:other_user) { create(:user) }
-  let(:foreign_question) { create(:question, user: other_user) }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2, user: user) }
@@ -51,19 +49,25 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'POST #create' do
     sign_in_user
     context 'with valid attributes' do
+      subject { post :create, question: attributes_for(:question)}
+
       it 'saves the new question to the database' do
-        expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
+        expect { subject }.to change(@user.questions, :count).by(1)
       end
 
       it 'redirects to show view' do
-        post :create, question: attributes_for(:question)
+        subject
         expect(response).to redirect_to question_path(assigns(:question))
       end
 
       it 'have connection between signed user and question' do
         sign_in(user)
-        post :create, question:attributes_for(:question)
+        subject
         expect(assigns(:question).user).to eq user
+      end
+
+      it_behaves_like 'Publishable' do
+        let(:channel) { '/questions' }
       end
     end
 
@@ -133,44 +137,8 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe 'PATCH #vote_up' do
-    sign_in_user
-    let(:question) { create(:question, user: @user) }
-
-    it 'increase vote for smb question' do
-      expect { patch :vote_up, id: foreign_question, format: :json }.to change(foreign_question.votes, :count)
-      expect(foreign_question.votes.rating).to eq 1
-      expect(response).to render_template :vote
-    end
-
-    it 'does not change vote for own question' do
-      expect { patch :vote_up, id: question, format: :json }.to_not change(question.votes, :count)
-    end
-  end
-
-  describe 'PATCH #vote_down' do
-    sign_in_user
-    let(:question) { create(:question, user: @user) }
-
-    it 'decrease vote for smb question' do
-      expect { patch :vote_down, id: foreign_question, format: :json }.to change(foreign_question.votes, :count)
-      expect(foreign_question.votes.rating).to eq -1
-      expect(response).to render_template :vote
-    end
-
-    it 'does not change vote for own question' do
-      expect { patch :vote_down, id: question, format: :json }.to_not change(question.votes, :count)
-    end
-  end
-
-  describe 'PATCH #vote_reset' do
-    sign_in_user
-
-    it 'reset vote for smb question' do
-      patch :vote_up, id: foreign_question, format: :json
-      expect { patch :vote_reset, id: foreign_question, format: :json }.to change(foreign_question.votes, :count)
-      expect(foreign_question.votes.rating).to eq 0
-      expect(response).to render_template :vote
-    end
+  it_behaves_like 'Votable', Question do
+    let(:object) { create(:question, user: user) }
+    let(:object_second) { create(:question, user: other_user) }
   end
 end
