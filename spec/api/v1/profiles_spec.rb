@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe 'Profile API' do
   describe 'GET /me' do
-    let(:do_request) { get '/api/v1/profiles', format: :json }
     it_behaves_like 'API authenticable'
 
     context 'authorized' do
@@ -25,7 +24,7 @@ describe 'Profile API' do
         end
       end
     end
-    
+
     def do_request(options = {})
       get '/api/v1/profiles/me', { format: :json }.merge(options)
     end

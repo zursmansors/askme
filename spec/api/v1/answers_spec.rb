@@ -5,7 +5,6 @@ describe 'Answers API' do
   let!(:question) { create :question, user: user }
 
   describe 'GET /index' do
-    let(:do_request) { get "/api/v1/questions/#{question.id}/answers", format: :json }
     it_behaves_like 'API authenticable'
 
     context 'authorized' do
