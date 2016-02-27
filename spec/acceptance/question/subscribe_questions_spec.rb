@@ -1,7 +1,7 @@
 require_relative '../acceptance_helper'
 
 feature 'Subscribe to the question', %q{
-  In order to sign for the question update
+  In order to receive notifications with a new answer
   As an authenticated user
   I want to be able subscribe to the questions
 } do
