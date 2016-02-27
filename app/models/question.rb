@@ -14,5 +14,5 @@ class Question < ActiveRecord::Base
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
-  scope :created_yesterday, -> { where(created_at: Time.current.yesterday.all_day) }
+  scope :created_yesterday, -> { where(created_at: Time.zone.yesterday.all_day) }
 end

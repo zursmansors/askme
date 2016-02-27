@@ -14,7 +14,6 @@ class Answer < ActiveRecord::Base
   default_scope { order best: :desc }
 
   after_create :notify_subscribers
-  after_create :create_subscription_for_author
 
   def set_best
     ActiveRecord::Base.transaction do
@@ -27,9 +26,5 @@ class Answer < ActiveRecord::Base
 
   def notify_subscribers
     NotifyUsersJob.perform_later(question)
-  end
-
-  def create_subscription_for_author
-    Subscription.find_or_initialize_by(user: self.user, question: self.question)
   end
 end
