@@ -1,4 +1,5 @@
 = @greeting
 p
-  | You've got new answers on subscribed question:
+  | You've got new answer on subscribed question:
+  p = link_to @question.title, question_url(@question)
   p = @answer.body

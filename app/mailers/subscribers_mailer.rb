@@ -1,8 +1,8 @@
 class SubscribersMailer < ApplicationMailer
    def notify(user, answer)
     @answer = answer
+    @question = answer.question
 
-    # mail to: user.email, subject: "New answer's notifier"
-    mail to: user.email, subject: "New answer to #{answer.question.title}"
+    mail to: user.email, subject: "New answer's notifier"
   end
 end
