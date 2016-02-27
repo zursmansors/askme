@@ -13,12 +13,6 @@ RSpec.describe Answer, type: :model do
     it { should_not be_able_to :manage, :all }
   end
 
-  describe 'for admin' do
-    let(:user) { create :user, admin: true }
-
-    it { should be_able_to :manage, :all }
-  end
-
   describe 'for user' do
     let(:user) { create :user }
     let(:other_user) { create :user }
@@ -31,6 +25,7 @@ RSpec.describe Answer, type: :model do
 
     let(:attachment) { create :attachment, attachable: question }
     let(:other_attachment) { create :attachment, attachable: other_question }
+
 
     it { should_not be_able_to :manage, :all }
     it { should be_able_to :read, :all }
@@ -53,5 +48,8 @@ RSpec.describe Answer, type: :model do
 
     it { should be_able_to :manage, attachment, user: user }
     it { should_not be_able_to :manage, other_attachment, user: user }
+
+    it { should be_able_to :create, Subscription }
+    it { should be_able_to :destroy, Subscription, user: user }
   end
 end

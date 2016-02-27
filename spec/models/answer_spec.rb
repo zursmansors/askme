@@ -30,4 +30,9 @@ RSpec.describe Answer, type: :model do
       expect(question.answers.first).to eq answer
     end
   end
+
+  it 'should notify users' do
+    expect(NotifyUsersJob).to receive(:perform_later).with(question)
+    Answer.create!(attributes_for(:answer).merge(question: question, user: user))
+  end
 end

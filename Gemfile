@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 # Use postgresql as the database for Active Record
@@ -65,6 +64,9 @@ gem 'doorkeeper'
 gem 'active_model_serializers'
 gem 'oj'
 gem 'oj_mimic_json'
+gem 'whenever'
+gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', require: nil
 
 group :development, :test do
   gem 'rspec-rails'

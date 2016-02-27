@@ -13,10 +13,23 @@ class Answer < ActiveRecord::Base
 
   default_scope { order best: :desc }
 
+  after_create :notify_subscribers
+  after_create :create_subscription_for_author
+
   def set_best
     ActiveRecord::Base.transaction do
       self.question.answers.update_all(best: false)
       update!(best: true)
     end
+  end
+
+  private
+
+  def notify_subscribers
+    NotifyUsersJob.perform_later(question)
+  end
+
+  def create_subscription_for_author
+    Subscription.find_or_initialize_by(user: self.user, question: self.question)
   end
 end

@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [ :index, :show ]
   before_action :load_question, only: [:show, :edit, :update, :destroy]
+  before_action :load_subscription, only: [:show]
   after_action :publish_question, only: :create
 
   include Voted
@@ -43,6 +44,10 @@ class QuestionsController < ApplicationController
 
   def load_question
     @question = Question.find(params[:id])
+  end
+
+  def load_subscription
+    @subscription = @question.subscriptions.find_by(user: current_user) || Subscription.new
   end
 
   def publish_question
