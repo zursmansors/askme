@@ -16,3 +16,6 @@
 /public/uploads
 
 config/database.yml
+
+# Redis
+dump.rdb
