@@ -19,3 +19,8 @@ config/database.yml
 
 # Redis
 dump.rdb
+
+# Sphinx
+config/*.sphinx.yml
+config/*.sphinx.conf
+db/sphinx
