@@ -38,6 +38,15 @@ RSpec.configure do |config|
   config.extend ControllerMacros, type: :controller
   config.include AcceptanceHelper, type: :feature
   config.include OmniauthMacros
+  config.include SphinxMacros, type: :feature
+
+  config.before(:suite) do
+    # Ensure sphinx directories exist for the test environment
+    ThinkingSphinx::Test.init
+    # Configure and start Sphinx, and automatically
+    # stop Sphinx at the end of the test suite.
+    ThinkingSphinx::Test.start_with_autostop
+  end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

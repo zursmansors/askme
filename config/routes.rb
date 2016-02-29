@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     post '/add_email' => 'omniauth_callbacks#add_email'
   end
 
+  get 'search', to: 'search#search', as: :search
+
   concern :votable do
     member do
       patch :vote_up
@@ -19,6 +21,8 @@ Rails.application.routes.draw do
       patch :vote_reset
     end
   end
+
+  resources :users, only: [:index, :show, :edit, :update]
 
   resources :questions, concerns: :votable do
     resources :comments, defaults: { commentable: 'questions' }

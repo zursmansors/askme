@@ -1,0 +1,23 @@
+=link_to 'To the questions list', questions_path
+= render 'search/form'
+.row
+  .col-xs-12
+    .result
+      - if @resources
+        - @resources.each do |resource|
+          - if resource.is_a?(Question)
+            .question-summary
+              .summary
+                = link_to resource.title, resource
+              .search-body
+                = resource.body
+          - elsif resource.is_a?(Answer)
+            .question-summary
+              .summary
+                = link_to resource.question.title, resource.question
+              .search-body
+                = resource.body
+          - elsif resource.is_a?(Comment)
+            p = resource.body
+          - elsif resource.is_a?(User)
+            p = link_to resource.email, resource
