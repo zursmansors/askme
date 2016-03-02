@@ -5,6 +5,7 @@ require 'carrierwave'
 require 'devise'
 require 'doorkeeper'
 require 'omniauth-facebook'
+require 'omniauth-twitter'
 
 module Askme
   class Application < Rails::Application
