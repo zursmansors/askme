@@ -3,6 +3,7 @@ require File.expand_path('../boot', __FILE__)
 require 'rails/all'
 require 'carrierwave'
 require 'devise'
+require 'doorkeeper'
 
 module Askme
   class Application < Rails::Application
