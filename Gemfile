@@ -71,6 +71,7 @@ gem 'mysql2'
 gem 'thinking-sphinx'
 gem 'dotenv'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
+gem 'therubyracer'
 
 group :development, :test do
   gem 'rspec-rails'
