@@ -11,6 +11,7 @@ require 'remotipart'
 require 'private_pub'
 require 'skim'
 require 'cocoon'
+require 'turbolinks'
 
 module Askme
   class Application < Rails::Application
