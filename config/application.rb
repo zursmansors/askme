@@ -8,6 +8,7 @@ require 'omniauth-facebook'
 require 'omniauth-twitter'
 require 'jquery-rails'
 require 'remotipart'
+require 'private_pub'
 
 module Askme
   class Application < Rails::Application
