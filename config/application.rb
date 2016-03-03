@@ -7,7 +7,6 @@ require 'doorkeeper'
 require 'omniauth-facebook'
 require 'omniauth-twitter'
 require 'jquery-rails'
-require 'jquery-ui'
 
 module Askme
   class Application < Rails::Application
