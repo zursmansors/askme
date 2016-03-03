@@ -6,6 +6,7 @@ require 'devise'
 require 'doorkeeper'
 require 'omniauth-facebook'
 require 'omniauth-twitter'
+require 'jquery-rails'
 
 module Askme
   class Application < Rails::Application
