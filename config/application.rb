@@ -9,6 +9,7 @@ require 'omniauth-twitter'
 require 'jquery-rails'
 require 'remotipart'
 require 'private_pub'
+require 'skim'
 
 module Askme
   class Application < Rails::Application
