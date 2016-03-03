@@ -7,6 +7,7 @@ require 'doorkeeper'
 require 'omniauth-facebook'
 require 'omniauth-twitter'
 require 'jquery-rails'
+require 'remotipart'
 
 module Askme
   class Application < Rails::Application
