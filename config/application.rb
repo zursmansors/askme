@@ -12,6 +12,7 @@ require 'private_pub'
 require 'skim'
 require 'cocoon'
 require 'turbolinks'
+require 'bootstrap-sass'
 
 module Askme
   class Application < Rails::Application
