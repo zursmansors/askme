@@ -13,6 +13,10 @@ require 'skim'
 require 'cocoon'
 require 'turbolinks'
 require 'bootstrap-sass'
+require 'cancancan'
+require 'gon'
+require 'thinking-sphinx'
+require 'active_model_serializers'
 
 module Askme
   class Application < Rails::Application
