@@ -16,6 +16,7 @@ require 'bootstrap-sass'
 require 'cancancan'
 require 'gon'
 require 'thinking-sphinx'
+require 'thinking_sphinx/tasks'
 require 'active_model_serializers'
 
 module Askme
