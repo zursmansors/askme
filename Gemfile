@@ -37,6 +37,7 @@ gem 'thinking-sphinx'
 gem 'dotenv'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'therubyracer'
+gem 'unicorn'
 
 group :development, :test do
   gem 'byebug'
@@ -57,6 +58,7 @@ group :development do
   gem 'capistrano-rvm', require: false
   gem 'capistrano-passenger', require: false
   gem 'capistrano-sidekiq', require: false
+  gem 'capistrano3-unicorn', require: false
 end
 
 group :test do
