@@ -1,3 +1,4 @@
 .panel.panel-default
   .panel-footer
-    li= comment.body
+    - cache comment do
+      li= comment.body

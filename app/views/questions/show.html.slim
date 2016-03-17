@@ -1,21 +1,22 @@
-h1
-  | Question:
-.question data-question-id = @question.id
-  = render 'question'
-.question-votes
-  = render 'votes/votes', object: @question
-.question-comments
-  .comments-list id="#{dom_id(@question)}"
-  = render @question.comments
-  = render 'comments/form', commentable: @question
+-cache @question do
+  h1
+    | Question:
+  .question data-question-id = @question.id
+    = render 'question'
+  .question-votes
+    = render 'votes/votes', object: @question
+  .question-comments
+    .comments-list id="#{dom_id(@question)}"
+    = render @question.comments
+    = render 'comments/form', commentable: @question
 
-h2
-  | Answers:
-.answers
-  = render 'answers'
+  h2
+    | Answers:
+  .answers
+    = render 'answers'
 
-answer-form
-  = render 'answers/form'
+  answer-form
+    = render 'answers/form'
 
 = subscribe_to "/questions/#{@question.id}/answers"
 = subscribe_to "/questions/#{@question.id}/comments"

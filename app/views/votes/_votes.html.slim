@@ -1,7 +1,8 @@
 .panel.panel-default
   .panel-footer
     .row
-      | Rating: #{object.votes.rating}
+      - cache [object, :vote]
+        | Rating: #{object.votes.rating}
   .row
     - if can? :vote, object
       .col-md-1

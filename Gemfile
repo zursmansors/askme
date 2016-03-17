@@ -38,6 +38,7 @@ gem 'dotenv'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'therubyracer'
 gem 'unicorn'
+gem 'redis-rails'
 
 group :development, :test do
   gem 'byebug'
