@@ -2,7 +2,7 @@
   .panel-heading
     - @question.answers.each do |answer|
       -if answer.persisted?
-        - cache answer do
+        - cache_if (not user_signed_in?), ['guest', answer] do
           .panel-footer
             p= answer.body
             ul
@@ -11,23 +11,24 @@
           -if answer.best == true
             p
               span.badge = "Best answer"
-          - if can?(:set_best, answer) && answer.best == false
-            p= link_to 'Set as the best', set_best_answer_path(question_id: @question.id, id: answer.id), method: :patch, remote: true
-          - if can?(:manage, answer)
-            p= link_to 'Edit', '', data: { answer_id: answer.id }, class: 'edit-answer-link'
-            p= form_for [answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
-                p= f.label :body, "Answer"
-                p= f.text_area :body
-                = f.fields_for :attachments do |a|
-                  = render 'attachments/attachment_fields', f: a
-                .links
-                  = link_to_add_association 'Add file', f, :attachments, partial: 'attachments/attachment_fields'
-                p= f.submit 'Save'
-            p= link_to 'Delete answer', [answer], remote: true, method: :delete, data: {confirm: 'Are you sure?'}
-          .answer-votes id="#{dom_id(answer)}"
-            = render 'votes/votes', object: answer
-          .comments-list id="#{dom_id(answer)}"
-            = render answer.comments
-          - if can?(:create, Comment)
-            = render 'comments/form', commentable: answer
+          - cache_if (user_signed_in?), ['user', answer] do
+            - if can?(:set_best, answer) && answer.best == false
+              p= link_to 'Set as the best', set_best_answer_path(question_id: @question.id, id: answer.id), method: :patch, remote: true
+            - if can?(:manage, answer)
+              p= link_to 'Edit', '', data: { answer_id: answer.id }, class: 'edit-answer-link'
+              p= form_for [answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+                  p= f.label :body, "Answer"
+                  p= f.text_area :body
+                  = f.fields_for :attachments do |a|
+                    = render 'attachments/attachment_fields', f: a
+                  .links
+                    = link_to_add_association 'Add file', f, :attachments, partial: 'attachments/attachment_fields'
+                  p= f.submit 'Save'
+              p= link_to 'Delete answer', [answer], remote: true, method: :delete, data: {confirm: 'Are you sure?'}
+            .answer-votes id="#{dom_id(answer)}"
+              = render 'votes/votes', object: answer
+            .comments-list id="#{dom_id(answer)}"
+              = render answer.comments
+            - if can?(:create, Comment)
+              = render 'comments/form', commentable: answer
 
